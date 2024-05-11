@@ -37,7 +37,3 @@ const orderDetails2 = `고객 : ${customer.name}
 `;
 
 console.log(orderDetails2);
-
-// Destructuring
-
-//Spread Operators
