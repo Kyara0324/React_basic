@@ -1,4 +1,6 @@
-import React from "react";
+import { useState } from "react";
+import Button from "./components/Button";
+import User from "./components/User";
 
 const App = () => {
   const style = {
@@ -7,55 +9,86 @@ const App = () => {
     padding: "50px",
   };
 
-  const users = [
+  const [users, setUsers] = useState([
     {
-      id: 1,
+      id: new Date().getTime() + 1,
       age: 30,
       name: "송중기",
     },
     {
-      id: 2,
+      id: new Date().getTime() + 2,
       age: 24,
       name: "송강",
     },
     {
-      id: 3,
+      id: new Date().getTime() + 3,
       age: 21,
       name: "김유정",
     },
     {
-      id: 4,
+      id: new Date().getTime() + 4,
       age: 29,
       name: "구교환",
     },
-  ];
+  ]);
+
+  const [age, setAge] = useState(0);
+  const [name, setName] = useState("");
+
+  const addUserHandler = () => {
+    const newUser = {
+      id: new Date().getTime(),
+      age: Number(age),
+      name: name,
+    };
+    setUsers([...users, newUser]);
+  };
+
+  const deleteUserhandler = (id) => {
+    //삭제할 대상 id
+    const deletedUsers = users.filter(function (user) {
+      return user.id != id;
+    });
+
+    setUsers(deletedUsers);
+    console.log(deletedUsers);
+  };
+
   return (
-    <div style={style}>
-      {users.map(function (user) {
-        return <User key={user.id} user={user} />;
-      })}
-    </div>
+    <>
+      <input
+        type="number"
+        value={age}
+        onChange={(e) => {
+          setAge(e.target.value);
+        }}
+      />
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => {
+          setName(e.target.value);
+        }}
+      />
+      <Button color="green" onClick={addUserHandler}>
+        추가
+      </Button>
+      <div style={style}>
+        {users.map(function (user) {
+          if (user.age >= 25) {
+            return null;
+          }
+          return (
+            <User
+              key={user.id}
+              user={user}
+              deleteUserhandler={deleteUserhandler}
+            />
+          );
+        })}
+      </div>
+    </>
   );
 };
 
 export default App;
-
-const User = ({ user }) => {
-  const squareStyle = {
-    width: "100px",
-    height: "100px",
-    border: "1px solid green",
-    borderRadius: "10px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  };
-
-  const { age, name } = user;
-
-  return (
-    <div style={squareStyle}>
-      {age}살 - {name}
-    </div>
-  );
-};
