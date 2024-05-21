@@ -1,31 +1,61 @@
 import React from "react";
-function App() {
-  // <---- 자바스크립트 영역 ---->
-  const handleCrick = () => {
-    alert("안녕하세요.");
+
+const App = () => {
+  const style = {
+    display: "flex",
+    gap: "12px",
+    padding: "50px",
   };
+
+  const users = [
+    {
+      id: 1,
+      age: 30,
+      name: "송중기",
+    },
+    {
+      id: 2,
+      age: 24,
+      name: "송강",
+    },
+    {
+      id: 3,
+      age: 21,
+      name: "김유정",
+    },
+    {
+      id: 4,
+      age: 29,
+      name: "구교환",
+    },
+  ];
   return (
-    /* <---- HTML/JSX 영역  ---->*/
-    <div
-      style={{
-        height: "100vh",
-        display: " flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      {/* 이곳에 퀴즈를 위한 html 코드를 작성해 주세요 */}
-      <span>이것은 내가 만든 APP 컴포넌트 입니다</span>
-      <button
-        onClick={function () {
-          alert("안녕하세요.");
-        }}
-      >
-        클릭!
-      </button>
+    <div style={style}>
+      {users.map(function (user) {
+        return <User key={user.id} user={user} />;
+      })}
     </div>
   );
-}
+};
 
 export default App;
+
+const User = ({ user }) => {
+  const squareStyle = {
+    width: "100px",
+    height: "100px",
+    border: "1px solid green",
+    borderRadius: "10px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  };
+
+  const { age, name } = user;
+
+  return (
+    <div style={squareStyle}>
+      {age}살 - {name}
+    </div>
+  );
+};
